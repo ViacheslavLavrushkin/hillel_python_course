@@ -124,5 +124,3 @@ def users_update():
 
 if __name__ == '__main__':
     app.run(port='5000')
-
-# for Homw Work 2
