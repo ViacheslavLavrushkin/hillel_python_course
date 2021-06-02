@@ -1,7 +1,3 @@
 .idea/
-env/
 __pycache__/
-create_tables.py
-hillel_python_course/
-.idea/vcs.xml
-
+/env
