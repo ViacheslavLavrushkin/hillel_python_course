@@ -11,6 +11,4 @@ def generate_password(length: int = 10) -> str:
 
     return password
 
-def foo3():
 
-    pass

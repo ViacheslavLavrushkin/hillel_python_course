@@ -1,3 +1,5 @@
+import sqlite3
+
 from flask import Flask, request
 
 from utils import generate_password
@@ -47,80 +49,79 @@ def gen_pass():  # length = 20
 
     return generate_password(length)
 
-# crud operation for users
-@app.route('/users/creat/')
-def users_create():
 
+# crud operations for phones
+@app.route('/phones/create/')
+def phones_create():
     query_params = request.args
-    first_name = query_params.get('first_name')
-    age = int(query_params.get('age'))
+    id = query_params.get('id')
+    value = query_params.get('value')
 
     import sqlite3
 
-    con = sqlite3.connect("./users.db")
+    con = sqlite3.connect("./phones.db")
     cur = con.cursor()
     sql = """
-    INSERTS INTO users
-    values (null, '{first_name}', '{age}')
+    INSERT INTO phones
+    values (null, '{id}', '{value}')
     """
     cur.execute(sql)
     con.commit()
     con.close()
-    return 'User was Created'
 
-# crud operation for users delete
-@app.route('/users/delete/')
-def users_delete():
+    return 'Phones was created'
 
+
+@app.route('/phones/delete/')
+def phones_delete():
     import sqlite3
 
-    con = sqlite3.connect("./users.db")
+    con = sqlite3.connect("./phones.db")
     cur = con.cursor()
     sql = """
-    DELETE FROM users;
+    DELETE FROM phones;
     """
     cur.execute(sql)
     con.commit()
     con.close()
-    return 'All users were delete'
+
+    return 'All phones were deleted'
 
 
-
-@app.route('/users/list/')
-def users_list():
-
+@app.route('/phones/list/')
+def phones_list():
     import sqlite3
 
-    con = sqlite3.connect("./users.db")
+    con = sqlite3.connect("./phones.db")
     cur = con.cursor()
     sql = """
-    SELECT * FROM users;
+    SELECT * FROM phones;
     """
     cur.execute(sql)
-    users_list = cur.fetchall()
-    # breackpoint()
-    con.commit()
+    phones_list = cur.fetchall()
     con.close()
-    return 'All users were delete'
 
-@app.route('/users/update/')
-def users_update():
+    return str(phones_list)
 
+
+@app.route('/phones/update/')
+def phones_update():
     query_params = request.args
-    first_name = query_params.get('first_name')
-    age = int(query_params.get('age'))
+    value = query_params.get('value')
 
     import sqlite3
 
-    con = sqlite3.connect("./users.db")
+    con = sqlite3.connect("./phones.db")
     cur = con.cursor()
     sql = """
-    UPDATE users SET age = '{age}';
+    UPDATE phones SET value = {value};
     """
     cur.execute(sql)
     con.commit()
     con.close()
-    return 'All users were update'
+
+    return 'All phones were update'
+
 
 if __name__ == '__main__':
     app.run(port='5000')
